@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.1.3](https://github.com/kunit/geolite2lookup/compare/v0.1.2...v0.1.3) (2021-06-12)
+
+
 ## [v0.1.2](https://github.com/kunit/geolite2lookup/compare/v0.1.1...v0.1.2) (2021-06-12)
 
 GeoLite2-City 形式のファイルも読めるようにした
