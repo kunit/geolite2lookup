@@ -1,0 +1,94 @@
+before:
+  hooks:
+    - go mod download
+    - go mod tidy
+builds:
+  -
+    id: geolite2lookup-darwin
+    ldflags:
+      - -s -w -X github.com/kunit/geolite2lookup.version={{.Version}} -X github.com/kunit/geolite2lookup.commit={{.FullCommit}} -X github.com/kunit/geolite2lookup.date={{.Date}} -X github.com/kunit/geolite2lookup/version.Version={{.Version}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+    goarch:
+      - amd64
+  -
+    id: geolite2lookup-linux
+    ldflags:
+      - -s -w -X github.com/kunit/geolite2lookup.version={{.Version}} -X github.com/kunit/geolite2lookup.commit={{.FullCommit}} -X github.com/kunit/geolite2lookup.date={{.Date}} -X github.com/kunit/geolite2lookup/version.Version={{.Version}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+archives:
+  -
+    id: geolite2lookup-archive
+    name_template: '{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    format_overrides:
+      - goos: darwin
+        format: zip
+    files:
+      - CREDITS
+      - README.md
+      - CHANGELOG.md
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Version }}-next"
+changelog:
+  skip: true
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+dockers:
+  -
+    goos: linux
+    goarch: amd64
+    image_templates:
+      - 'ghcr.io/kunit/geolite2lookup:v{{ .Version }}'
+      - 'ghcr.io/kunit/geolite2lookup:latest'
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.name={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--label=org.opencontainers.image.source=https://github.com/kunit/geolite2lookup"
+    extra_files:
+      - scripts/entrypoint.sh
+brews:
+  -
+    name: geolite2lookup
+    tap:
+      owner: kunit
+      name: homebrew-tap
+    commit_author:
+      name: kunit
+      email: kunihiko.takahashi@gmail.com
+    homepage: https://github.com/kunit/geolite2lookup
+    description: geolite2lookup is look up country using IP Address.
+    license: MIT
+    install: |
+      bin.install 'geolite2lookup'
+nfpms:
+  -
+    id: geolite2lookup-nfpms
+    file_name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"
+    builds:
+      - geolite2lookup-linux
+    homepage: https://github.com/kunit/geolite2lookup
+    maintainer: TAKAHASHI Kunihiko <kunihiko.takahashi@gmail.com>
+    description: geolite2lookup is look up country using IP Address.
+    license: MIT
+    formats:
+      - deb
+      - rpm
+      - apk
+    bindir: /usr/bin
+    epoch: 1
