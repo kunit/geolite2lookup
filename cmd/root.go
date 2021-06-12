@@ -41,9 +41,13 @@ var rootCmd = &cobra.Command{
 		}
 
 		ip := args[0]
-		file := os.Getenv("GEOLITE2_MMDB_FILE")
+
+		file, _ := cmd.Flags().GetString("file")
 		if file == "" {
-			file = "/usr/share/GeoIP2/GeoLite2-Country.mmdb"
+			file = os.Getenv("GEOLITE2_MMDB_FILE")
+			if file == "" {
+				return errors.New("GEOLITE2_MMDB_FILE not set")
+			}
 		}
 
 		reader, err := geoip2.NewCountryReaderFromFile(file)
@@ -67,4 +71,8 @@ func Execute() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+}
+
+func init() {
+	rootCmd.Flags().StringP("file", "f", "", "mmdb_file")
 }
