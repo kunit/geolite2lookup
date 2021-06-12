@@ -2,6 +2,7 @@
 
 ## [v0.1.6](https://github.com/kunit/geolite2lookup/compare/v0.1.5...v0.1.6) (2021-06-12)
 
+ヘルプで綴り間違いがあったので修正
 
 ## [v0.1.5](https://github.com/kunit/geolite2lookup/compare/v0.1.4...v0.1.5) (2021-06-12)
 
