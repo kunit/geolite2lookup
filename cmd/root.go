@@ -94,6 +94,6 @@ func Execute() {
 
 func init() {
 	rootCmd.Flags().StringP("type", "t", "Country", "MMDB Edition")
-	rootCmd.Flags().StringP("dir", "d", "/usr/share/GeoIP2", "MMDB direcotry")
+	rootCmd.Flags().StringP("dir", "d", "/usr/share/GeoIP2", "MMDB directory")
 	rootCmd.Flags().StringP("file", "f", "", "MMDB filename (default \"GeoLite2-[type].mmdb\")")
 }

@@ -31,9 +31,9 @@ archives:
       - goos: darwin
         format: zip
     files:
-      - CREDITS
       - README.md
-      - CHANGELOG.md
+      - CREDITS
+      - LICENSE
 checksum:
   name_template: 'checksums.txt'
 snapshot:
