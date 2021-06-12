@@ -45,23 +45,6 @@ changelog:
     exclude:
     - '^docs:'
     - '^test:'
-dockers:
-  -
-    goos: linux
-    goarch: amd64
-    image_templates:
-      - 'ghcr.io/kunit/geolite2lookup:v{{ .Version }}'
-      - 'ghcr.io/kunit/geolite2lookup:latest'
-    dockerfile: Dockerfile
-    build_flag_templates:
-      - "--pull"
-      - "--label=org.opencontainers.image.created={{.Date}}"
-      - "--label=org.opencontainers.image.name={{.ProjectName}}"
-      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-      - "--label=org.opencontainers.image.version={{.Version}}"
-      - "--label=org.opencontainers.image.source=https://github.com/kunit/geolite2lookup"
-    extra_files:
-      - scripts/entrypoint.sh
 brews:
   -
     name: geolite2lookup
