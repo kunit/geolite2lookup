@@ -24,7 +24,6 @@ import (
 	"fmt"
 	"net"
 	"os"
-	"strings"
 
 	"github.com/IncSW/geoip2"
 	"github.com/kunit/geolite2lookup/version"
@@ -43,30 +42,13 @@ var rootCmd = &cobra.Command{
 
 		ip := args[0]
 
+		mmdbType, _ := cmd.Flags().GetString("type")
 		dir, _ := cmd.Flags().GetString("dir")
-		if dir == "" {
-			dir = "/usr/share/GeoIP2"
-		}
-
 		file, _ := cmd.Flags().GetString("file")
-		if file == "" {
-			file = "GeoLite2-Country.mmdb"
-		}
 
 		mmdb := fmt.Sprintf("%s/%s", dir, file)
 
-		if strings.Contains(mmdb, "City") {
-			reader, err := geoip2.NewCityReaderFromFile(mmdb)
-			if err != nil {
-				return err
-			}
-			record, err := reader.Lookup(net.ParseIP(ip))
-			if err != nil {
-				fmt.Printf("GeoLite2 City Edition: IP Address not found\n")
-			} else {
-				fmt.Printf("GeoLite2 City Edition: %s, %s\n", record.Country.ISOCode, record.Country.Names["en"])
-			}
-		} else {
+		if mmdbType == "Country" {
 			reader, err := geoip2.NewCountryReaderFromFile(mmdb)
 			if err != nil {
 				return err
@@ -77,6 +59,18 @@ var rootCmd = &cobra.Command{
 				fmt.Printf("GeoLite2 Country Edition: IP Address not found\n")
 			} else {
 				fmt.Printf("GeoLite2 Country Edition: %s, %s\n", record.Country.ISOCode, record.Country.Names["en"])
+			}
+		} else {
+			reader, err := geoip2.NewCityReaderFromFile(mmdb)
+			if err != nil {
+				return err
+			}
+
+			record, err := reader.Lookup(net.ParseIP(ip))
+			if err != nil {
+				fmt.Printf("GeoLite2 City Edition: IP Address not found\n")
+			} else {
+				fmt.Printf("GeoLite2 City Edition: %s, %s\n", record.Country.ISOCode, record.Country.Names["en"])
 			}
 		}
 
@@ -92,6 +86,7 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().StringP("dir", "d", "", "direcotry")
-	rootCmd.Flags().StringP("file", "f", "", "filename")
+	rootCmd.Flags().StringP("type", "t", "Country", "MMDB Edition")
+	rootCmd.Flags().StringP("dir", "d", "/usr/share/GeoIP2", "MMDB direcotry")
+	rootCmd.Flags().StringP("file", "f", "GeoLite2-Country.mmdb", "MMDB filename")
 }
