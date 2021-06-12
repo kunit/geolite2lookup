@@ -2,6 +2,10 @@
 
 ## [v0.1.3](https://github.com/kunit/geolite2lookup/compare/v0.1.2...v0.1.3) (2021-06-12)
 
+mmdb の指定の仕方を変更
+ディレクトリ、ファイル、それぞれデフォルトとして以下の値を持つようにした
+- ディレクトリ: /usr/share/GeoIP2
+- ファイル: GeoLite2-Country.mmdb
 
 ## [v0.1.2](https://github.com/kunit/geolite2lookup/compare/v0.1.1...v0.1.2) (2021-06-12)
 
