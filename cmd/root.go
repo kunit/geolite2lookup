@@ -24,6 +24,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"strings"
 
 	"github.com/IncSW/geoip2"
 	"github.com/kunit/geolite2lookup/version"
@@ -50,16 +51,29 @@ var rootCmd = &cobra.Command{
 			}
 		}
 
-		reader, err := geoip2.NewCountryReaderFromFile(file)
-		if err != nil {
-			return err
-		}
-
-		record, err := reader.Lookup(net.ParseIP(ip))
-		if err != nil {
-			fmt.Print("GeoLite2 Country Edition: IP Address not found")
+		if strings.Contains(file, "City") {
+			reader, err := geoip2.NewCityReaderFromFile(file)
+			if err != nil {
+				return err
+			}
+			record, err := reader.Lookup(net.ParseIP(ip))
+			if err != nil {
+				fmt.Printf("GeoLite2 City Edition: IP Address not found\n")
+			} else {
+				fmt.Printf("GeoLite2 City Edition: %s, %s\n", record.Country.ISOCode, record.Country.Names["en"])
+			}
 		} else {
-			fmt.Printf("GeoLite2 Country Edition: %s, %s\n", record.Country.ISOCode, record.Country.Names["en"])
+			reader, err := geoip2.NewCountryReaderFromFile(file)
+			if err != nil {
+				return err
+			}
+
+			record, err := reader.Lookup(net.ParseIP(ip))
+			if err != nil {
+				fmt.Printf("GeoLite2 Country Edition: IP Address not found\n")
+			} else {
+				fmt.Printf("GeoLite2 Country Edition: %s, %s\n", record.Country.ISOCode, record.Country.Names["en"])
+			}
 		}
 
 		return nil
