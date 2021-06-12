@@ -45,6 +45,13 @@ var rootCmd = &cobra.Command{
 		mmdbType, _ := cmd.Flags().GetString("type")
 		dir, _ := cmd.Flags().GetString("dir")
 		file, _ := cmd.Flags().GetString("file")
+		if file == "" {
+			if mmdbType == "Country" {
+				file = "GeoLite2-Country.mmdb"
+			} else {
+				file = "GeoLite2-City.mmdb"
+			}
+		}
 
 		mmdb := fmt.Sprintf("%s/%s", dir, file)
 
@@ -88,5 +95,5 @@ func Execute() {
 func init() {
 	rootCmd.Flags().StringP("type", "t", "Country", "MMDB Edition")
 	rootCmd.Flags().StringP("dir", "d", "/usr/share/GeoIP2", "MMDB direcotry")
-	rootCmd.Flags().StringP("file", "f", "GeoLite2-Country.mmdb", "MMDB filename")
+	rootCmd.Flags().StringP("file", "f", "", "MMDB filename (default \"GeoLite2-[type].mmdb\")")
 }
