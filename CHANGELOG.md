@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.1.5](https://github.com/kunit/geolite2lookup/compare/v0.1.4...v0.1.5) (2021-06-12)
+
+
 ## [v0.1.4](https://github.com/kunit/geolite2lookup/compare/v0.1.3...v0.1.4) (2021-06-12)
 
 デフォルト値のもたせ方を変更
