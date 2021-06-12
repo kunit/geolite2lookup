@@ -57,7 +57,7 @@ var rootCmd = &cobra.Command{
 
 		record, err := reader.Lookup(net.ParseIP(ip))
 		if err != nil {
-			println("GeoLite2 Country Edition: IP Address not found")
+			fmt.Print("GeoLite2 Country Edition: IP Address not found")
 		} else {
 			fmt.Printf("GeoLite2 Country Edition: %s, %s\n", record.Country.ISOCode, record.Country.Names["en"])
 		}
