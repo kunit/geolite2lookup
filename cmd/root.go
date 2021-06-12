@@ -43,16 +43,20 @@ var rootCmd = &cobra.Command{
 
 		ip := args[0]
 
-		file, _ := cmd.Flags().GetString("file")
-		if file == "" {
-			file = os.Getenv("GEOLITE2_MMDB_FILE")
-			if file == "" {
-				return errors.New("GEOLITE2_MMDB_FILE not set")
-			}
+		dir, _ := cmd.Flags().GetString("dir")
+		if dir == "" {
+			dir = "/usr/share/GeoIP2"
 		}
 
-		if strings.Contains(file, "City") {
-			reader, err := geoip2.NewCityReaderFromFile(file)
+		file, _ := cmd.Flags().GetString("file")
+		if file == "" {
+			file = "GeoLite2-Country.mmdb"
+		}
+
+		mmdb := fmt.Sprintf("%s/%s", dir, file)
+
+		if strings.Contains(mmdb, "City") {
+			reader, err := geoip2.NewCityReaderFromFile(mmdb)
 			if err != nil {
 				return err
 			}
@@ -63,7 +67,7 @@ var rootCmd = &cobra.Command{
 				fmt.Printf("GeoLite2 City Edition: %s, %s\n", record.Country.ISOCode, record.Country.Names["en"])
 			}
 		} else {
-			reader, err := geoip2.NewCountryReaderFromFile(file)
+			reader, err := geoip2.NewCountryReaderFromFile(mmdb)
 			if err != nil {
 				return err
 			}
@@ -88,5 +92,6 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().StringP("file", "f", "", "mmdb_file")
+	rootCmd.Flags().StringP("dir", "d", "", "direcotry")
+	rootCmd.Flags().StringP("file", "f", "", "filename")
 }
