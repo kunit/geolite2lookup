@@ -2,6 +2,7 @@
 
 ## [v0.1.9](https://github.com/kunit/geolite2lookup/compare/v0.1.8...v0.1.9) (2021-06-13)
 
+GeoLite2-City のデータを利用している場合、詳細情報を見れるようにした
 
 ## [v0.1.8](https://github.com/kunit/geolite2lookup/compare/v0.1.7...v0.1.8) (2021-06-13)
 
