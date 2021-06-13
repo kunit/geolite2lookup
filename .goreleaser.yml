@@ -45,6 +45,20 @@ changelog:
     exclude:
     - '^docs:'
     - '^test:'
+brews:
+  -
+    name: geolite2lookup
+    tap:
+      owner: kunit
+      name: homebrew-tap
+    commit_author:
+      name: kunit
+      email: kunihiko.takahashi@gmail.com
+    homepage: https://github.com/kunit/geolite2lookup
+    description: geolite2lookup is look up country/city using IP Address or hostname.
+    license: MIT
+    install: |
+      bin.install 'geolite2lookup'
 nfpms:
   -
     id: geolite2lookup-nfpms
