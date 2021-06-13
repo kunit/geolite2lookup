@@ -2,6 +2,7 @@
 
 ## [v0.1.8](https://github.com/kunit/geolite2lookup/compare/v0.1.7...v0.1.8) (2021-06-13)
 
+ホスト名からでも国コードを取得できるようにした
 
 ## [v0.1.7](https://github.com/kunit/geolite2lookup/compare/v0.1.6...v0.1.7) (2021-06-13)
 
