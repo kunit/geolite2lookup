@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.2.3](https://github.com/kunit/geolite2lookup/compare/v0.2.2...v0.2.3) (2021-06-14)
+
+
 ## [v0.2.2](https://github.com/kunit/geolite2lookup/compare/v0.2.1...v0.2.2) (2021-06-13)
 
 README に各種インストール方法を追記
