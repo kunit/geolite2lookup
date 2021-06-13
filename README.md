@@ -7,13 +7,16 @@
 ## 使い方
 
 ```
+look up country/city using IP Address or hostname
+
 Usage:
-  geolite2lookup <ipaddress> [flags]
+  geolite2lookup <ipaddress|hostname> [flags]
 
 Flags:
-  -d, --dir string    MMDB direcotry (default "/usr/share/GeoIP2")
+  -d, --dir string    MMDB directory (default "/usr/share/GeoIP2")
   -f, --file string   MMDB filename (default "GeoLite2-[type].mmdb")
   -h, --help          help for geolite2lookup
+  -i, --info          show additional information (only type "City")
   -t, --type string   MMDB Edition (default "Country")
   -v, --version       version for geolite2lookup
 ```

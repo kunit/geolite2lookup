@@ -132,5 +132,5 @@ func init() {
 	rootCmd.Flags().StringP("type", "t", "Country", "MMDB Edition")
 	rootCmd.Flags().StringP("dir", "d", "/usr/share/GeoIP2", "MMDB directory")
 	rootCmd.Flags().StringP("file", "f", "", "MMDB filename (default \"GeoLite2-[type].mmdb\")")
-	rootCmd.Flags().BoolP("info", "i", false, "show additional information (only type City)")
+	rootCmd.Flags().BoolP("info", "i", false, "show additional information (only type \"City\")")
 }
