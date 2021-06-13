@@ -21,6 +21,13 @@ Flags:
   -v, --version       version for geolite2lookup
 ```
 
+## 環境変数
+
+| 環境変数名 | 説明 | デフォルト値 |
+| --- | --- | --- |
+| `GEOLITE2LOOKUP_MMDB_TYPE` | 参照する MMDB のタイプ | `Country` |
+| `GEOLITE2LOOKUP_MMDB_DIR` | MMDB ファイルが配置してあるディレクトリ | `/usr/share/GeoIP2` |
+
 ## インストール方法
 
 **deb:**

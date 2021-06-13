@@ -129,8 +129,18 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().StringP("type", "t", "Country", "MMDB Edition")
-	rootCmd.Flags().StringP("dir", "d", "/usr/share/GeoIP2", "MMDB directory")
+	defaultMMDBType := os.Getenv("GEOLITE2LOOKUP_MMDB_TYPE")
+	if defaultMMDBType == "" {
+		defaultMMDBType = "Country"
+	}
+
+	defaultMMDBDir := os.Getenv("GEOLITE2LOOKUP_MMDB_DIR")
+	if defaultMMDBDir == "" {
+		defaultMMDBDir = "/usr/share/GeoIP2"
+	}
+
+	rootCmd.Flags().StringP("type", "t", defaultMMDBType, "MMDB Edition")
+	rootCmd.Flags().StringP("dir", "d", defaultMMDBDir, "MMDB directory")
 	rootCmd.Flags().StringP("file", "f", "", "MMDB filename (default \"GeoLite2-[type].mmdb\")")
 	rootCmd.Flags().BoolP("info", "i", false, "show additional information (only type \"City\")")
 }
