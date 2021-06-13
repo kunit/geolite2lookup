@@ -1,6 +1,6 @@
 # geolite2lookup
 
-[GeoLite2 Free Geolocation Data](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data) を利用して、国の判定を行う
+[GeoLite2 Free Geolocation Data](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data) を利用して、国もしくは都市の判定を行う
 
 ライブラリとしては、 [IncSW/geoip2](https://github.com/IncSW/geoip2) を利用している
 
@@ -19,6 +19,49 @@ Flags:
   -i, --info          show additional information (only type "City")
   -t, --type string   MMDB Edition (default "Country")
   -v, --version       version for geolite2lookup
+```
+
+## インストール方法
+
+**deb:**
+
+Use [dpkg-i-from-url](https://github.com/k1LoW/dpkg-i-from-url)
+
+``` console
+$ export GEOLITE2LOOKUP_VERSION=X.X.X
+$ curl -L https://git.io/dpkg-i-from-url | bash -s -- https://github.com/kunit/geolite2lookup/releases/download/v$GEOLITE2LOOKUP_VERSION/geolite2lookup_$GEOLITE2LOOKUP_VERSION-1_amd64.deb
+```
+
+**RPM:**
+
+``` console
+$ export GEOLITE2LOOKUP_VERSION=X.X.X
+$ yum install https://github.com/kunit/geolite2lookup/releases/download/v$GEOLITE2LOOKUP_VERSION/geolite2lookup_$GEOLITE2LOOKUP_VERSION-1_amd64.rpm
+```
+
+**apk:**
+
+Use [apk-add-from-url](https://github.com/k1LoW/apk-add-from-url)
+
+``` console
+$ export GEOLITE2LOOKUP_VERSION=X.X.X
+$ curl -L https://git.io/apk-add-from-url | sh -s -- https://github.com/kunit/geolite2lookup/releases/download/v$GEOLITE2LOOKUP_VERSION/geolite2lookup_$GEOLITE2LOOKUP_VERSION-1_amd64.apk
+```
+
+**homebrew tap:**
+
+```console
+$ brew install kunit/tap/geolite2lookup
+```
+
+**manually:**
+
+Download binary from [releases page](https://github.com/kunit/geolite2lookup/releases)
+
+**go get:**
+
+```console
+$ go get github.com/kunit/geolite2lookup
 ```
 
 ## License
