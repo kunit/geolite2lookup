@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.1.10](https://github.com/kunit/geolite2lookup/compare/v0.1.9...v0.1.10) (2021-06-13)
+
+
 ## [v0.1.9](https://github.com/kunit/geolite2lookup/compare/v0.1.8...v0.1.9) (2021-06-13)
 
 GeoLite2-City のデータを利用している場合、詳細情報を見れるようにした
