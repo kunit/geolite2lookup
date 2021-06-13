@@ -110,7 +110,9 @@ var rootCmd = &cobra.Command{
 					fmt.Printf("  TimeZone: %s\n", record.Location.TimeZone)
 					fmt.Printf("  Approximate Coordinates: %.4f, %.4f\n", record.Location.Latitude, record.Location.Longitude)
 					fmt.Printf("  Accuracy Radius: %d\n", record.Location.AccuracyRadius)
-					fmt.Printf("  MetroCode: %d\n", record.Location.MetroCode)
+					if record.Country.ISOCode == "US" {
+						fmt.Printf("  MetroCode: %d\n", record.Location.MetroCode)
+					}
 				}
 			}
 		}
