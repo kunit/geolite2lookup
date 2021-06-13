@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.2.2](https://github.com/kunit/geolite2lookup/compare/v0.2.1...v0.2.2) (2021-06-13)
+
+
 ## [v0.2.1](https://github.com/kunit/geolite2lookup/compare/v0.2.0...v0.2.1) (2021-06-13)
 
 homebrew 向けバイナリをリリースするようにした
