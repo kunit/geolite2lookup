@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.2.0](https://github.com/kunit/geolite2lookup/compare/v0.1.10...v0.2.0) (2021-06-13)
+
+
 ## [v0.1.10](https://github.com/kunit/geolite2lookup/compare/v0.1.9...v0.1.10) (2021-06-13)
 
 Metro Code は US の場合のみ表示するようにした
