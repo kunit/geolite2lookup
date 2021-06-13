@@ -32,8 +32,8 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:     "geolite2lookup <ipaddress|hostname>",
-	Short:   "look up country using IP Address or hostname",
-	Long:    `look up country using IP Address or hostname`,
+	Short:   "look up country/city using IP Address or hostname",
+	Long:    `look up country/city using IP Address or hostname`,
 	Version: version.Version,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) != 1 {
@@ -88,6 +88,30 @@ var rootCmd = &cobra.Command{
 				fmt.Printf("GeoLite2 City Edition: IP Address not found\n")
 			} else {
 				fmt.Printf("GeoLite2 City Edition: %s, %s\n", record.Country.ISOCode, record.Country.Names["en"])
+
+				info, _ := cmd.Flags().GetBool("info")
+				if info {
+					fmt.Printf("  Country Code: %s\n", record.Country.ISOCode)
+					fmt.Print("  Location:")
+					if record.City.Names["en"] != "" {
+						fmt.Printf(" %s,", record.City.Names["en"])
+					}
+					if len(record.Subdivisions) != 0 {
+						for _, s := range record.Subdivisions {
+							fmt.Printf(" %s,", s.Names["en"])
+						}
+					}
+					fmt.Printf(" %s,", record.Country.Names["en"])
+					fmt.Printf(" %s\n", record.Continent.Names["en"])
+
+					if record.Postal.Code != "" {
+						fmt.Printf("  Postal Code: %s\n", record.Postal.Code)
+					}
+					fmt.Printf("  TimeZone: %s\n", record.Location.TimeZone)
+					fmt.Printf("  Approximate Coordinates: %.4f, %.4f\n", record.Location.Latitude, record.Location.Longitude)
+					fmt.Printf("  Accuracy Radius: %d\n", record.Location.AccuracyRadius)
+					fmt.Printf("  MetroCode: %d\n", record.Location.MetroCode)
+				}
 			}
 		}
 
@@ -106,4 +130,5 @@ func init() {
 	rootCmd.Flags().StringP("type", "t", "Country", "MMDB Edition")
 	rootCmd.Flags().StringP("dir", "d", "/usr/share/GeoIP2", "MMDB directory")
 	rootCmd.Flags().StringP("file", "f", "", "MMDB filename (default \"GeoLite2-[type].mmdb\")")
+	rootCmd.Flags().BoolP("info", "i", false, "show additional information (only type City)")
 }

@@ -53,7 +53,7 @@ nfpms:
       - geolite2lookup-linux
     homepage: https://github.com/kunit/geolite2lookup
     maintainer: TAKAHASHI Kunihiko <kunihiko.takahashi@gmail.com>
-    description: geolite2lookup is look up country using IP Address.
+    description: geolite2lookup is look up country/city using IP Address or hostname.
     license: MIT
     formats:
       - deb
