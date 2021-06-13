@@ -2,6 +2,7 @@
 
 ## [v0.1.7](https://github.com/kunit/geolite2lookup/compare/v0.1.6...v0.1.7) (2021-06-13)
 
+rpm等でインストールするディレクトリを /usr/local/bin に変更
 
 ## [v0.1.6](https://github.com/kunit/geolite2lookup/compare/v0.1.5...v0.1.6) (2021-06-12)
 
