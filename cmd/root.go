@@ -31,16 +31,26 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:     "geolite2lookup <ipaddress>",
-	Short:   "look up country using IP Address",
-	Long:    `look up country using IP Address`,
+	Use:     "geolite2lookup <ipaddress|hostname>",
+	Short:   "look up country using IP Address or hostname",
+	Long:    `look up country using IP Address or hostname`,
 	Version: version.Version,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) != 1 {
 			return errors.New("ipaddress required")
 		}
 
-		ip := args[0]
+		ip_or_hostname := args[0]
+
+		var ip string
+
+		addr, err := net.ResolveIPAddr("ip", ip_or_hostname)
+
+		if err != nil {
+			ip = ip_or_hostname
+		} else {
+			ip = addr.String()
+		}
 
 		mmdbType, _ := cmd.Flags().GetString("type")
 		dir, _ := cmd.Flags().GetString("dir")
