@@ -2,6 +2,11 @@
 
 ## [v0.2.4](https://github.com/kunit/geolite2lookup/compare/v0.2.3...v0.2.4) (2021-06-15)
 
+表示関連の強化を行った
+
+- 表示ロケールを変更できるようにした
+- 国コードのみの表示モードを追加
+- 国名のみの表示モードを追加
 
 ## [v0.2.3](https://github.com/kunit/geolite2lookup/compare/v0.2.2...v0.2.3) (2021-06-14)
 
