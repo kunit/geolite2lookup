@@ -63,7 +63,29 @@ var rootCmd = &cobra.Command{
 			}
 		}
 
+		locale, _ := cmd.Flags().GetString("locale")
+
+		displayType := ""
+
+		code, _ := cmd.Flags().GetBool("code")
+		if code {
+			displayType = "code"
+		} else {
+			name, _ := cmd.Flags().GetBool("name")
+			if name {
+				displayType = "name"
+			} else {
+				info, _ := cmd.Flags().GetBool("info")
+				if info {
+					displayType = "info"
+				}
+			}
+		}
+
 		mmdb := fmt.Sprintf("%s/%s", dir, file)
+
+		countryCode := ""
+		countryName := ""
 
 		if mmdbType == "Country" {
 			reader, err := geoip2.NewCountryReaderFromFile(mmdb)
@@ -72,10 +94,19 @@ var rootCmd = &cobra.Command{
 			}
 
 			record, err := reader.Lookup(net.ParseIP(ip))
-			if err != nil {
-				fmt.Printf("GeoLite2 Country Edition: IP Address not found\n")
+			if err == nil {
+				countryCode = record.Country.ISOCode
+				countryName = record.Country.Names[locale]
+			}
+
+			if displayType == "code" {
+				fmt.Printf("%s\n", countryCode)
+			} else if displayType == "name" {
+				fmt.Printf("%s\n", countryName)
+			} else if countryCode != "" {
+				fmt.Printf("GeoLite2 Country Edition: %s, %s\n", countryCode, countryName)
 			} else {
-				fmt.Printf("GeoLite2 Country Edition: %s, %s\n", record.Country.ISOCode, record.Country.Names["en"])
+				fmt.Printf("GeoLite2 Country Edition: IP Address not found\n")
 			}
 		} else {
 			reader, err := geoip2.NewCityReaderFromFile(mmdb)
@@ -84,25 +115,30 @@ var rootCmd = &cobra.Command{
 			}
 
 			record, err := reader.Lookup(net.ParseIP(ip))
-			if err != nil {
-				fmt.Printf("GeoLite2 City Edition: IP Address not found\n")
-			} else {
-				fmt.Printf("GeoLite2 City Edition: %s, %s\n", record.Country.ISOCode, record.Country.Names["en"])
+			if err == nil {
+				countryCode = record.Country.ISOCode
+				countryName = record.Country.Names[locale]
+			}
 
-				info, _ := cmd.Flags().GetBool("info")
-				if info {
+			if displayType == "code" {
+				fmt.Printf("%s\n", countryCode)
+			} else if displayType == "name" {
+				fmt.Printf("%s\n", countryName)
+			} else if countryCode != "" {
+				fmt.Printf("GeoLite2 City Edition: %s, %s\n", countryCode, countryName)
+				if displayType == "info" {
 					fmt.Printf("  Country Code: %s\n", record.Country.ISOCode)
 					fmt.Print("  Location:")
-					if record.City.Names["en"] != "" {
-						fmt.Printf(" %s,", record.City.Names["en"])
+					if record.City.Names[locale] != "" {
+						fmt.Printf(" %s,", record.City.Names[locale])
 					}
 					if len(record.Subdivisions) != 0 {
 						for _, s := range record.Subdivisions {
-							fmt.Printf(" %s,", s.Names["en"])
+							fmt.Printf(" %s,", s.Names[locale])
 						}
 					}
-					fmt.Printf(" %s,", record.Country.Names["en"])
-					fmt.Printf(" %s\n", record.Continent.Names["en"])
+					fmt.Printf(" %s,", record.Country.Names[locale])
+					fmt.Printf(" %s\n", record.Continent.Names[locale])
 
 					if record.Postal.Code != "" {
 						fmt.Printf("  Postal Code: %s\n", record.Postal.Code)
@@ -114,6 +150,8 @@ var rootCmd = &cobra.Command{
 						fmt.Printf("  MetroCode: %d\n", record.Location.MetroCode)
 					}
 				}
+			} else {
+				fmt.Printf("GeoLite2 City Edition: IP Address not found\n")
 			}
 		}
 
@@ -129,6 +167,11 @@ func Execute() {
 }
 
 func init() {
+	defaultLocale := os.Getenv("GEOLITE2LOOKUP_LOCALE")
+	if defaultLocale == "" {
+		defaultLocale = "en"
+	}
+
 	defaultMMDBType := os.Getenv("GEOLITE2LOOKUP_MMDB_TYPE")
 	if defaultMMDBType == "" {
 		defaultMMDBType = "Country"
@@ -139,8 +182,11 @@ func init() {
 		defaultMMDBDir = "/usr/share/GeoIP2"
 	}
 
+	rootCmd.Flags().StringP("locale", "l", defaultLocale, "locale to use when display names")
 	rootCmd.Flags().StringP("type", "t", defaultMMDBType, "MMDB Edition")
 	rootCmd.Flags().StringP("dir", "d", defaultMMDBDir, "MMDB directory")
 	rootCmd.Flags().StringP("file", "f", "", "MMDB filename (default \"GeoLite2-[type].mmdb\")")
 	rootCmd.Flags().BoolP("info", "i", false, "show additional information (only type \"City\")")
+	rootCmd.Flags().BoolP("code", "c", false, "show country code only")
+	rootCmd.Flags().BoolP("name", "n", false, "show country name only")
 }
