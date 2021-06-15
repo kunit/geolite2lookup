@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.2.4](https://github.com/kunit/geolite2lookup/compare/v0.2.3...v0.2.4) (2021-06-15)
+
+
 ## [v0.2.3](https://github.com/kunit/geolite2lookup/compare/v0.2.2...v0.2.3) (2021-06-14)
 
 環境変数を設定することにより挙動を変更できるようにした
